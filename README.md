@@ -1,3 +1,6 @@
+# App Describtion:
+## It is a very simple app, enables user to login and add reviews to existing ATMs on map, edit or delete his/her reviews
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
