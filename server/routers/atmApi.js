@@ -8,7 +8,7 @@ const atmRouter = express.Router();
 //get all atms
 atmRouter.get("/", (req, res, next) => {
 
-  AtmModel.find({},{_id:0}, (err, data) => {
+  AtmModel.find({},{updatedAt:0, createdAt:0, __v:0}, (err, data) => {
     if (err) {
       return next(err);
     }else
@@ -47,20 +47,48 @@ atmRouter.get("/:id", (req, res, next) => {
 });
 
 //create a review
-atmRouter.post("/create", (req, res, next) => {
-  const { geojson, userId } = req.body;
+atmRouter.post("/createone", async(req, res, next) => {
+  const { location, userId } =req.body;
+  let geometry = location.geometry;
   const newATM = {
-    geojson, userId
+    userId,
+    // location:{
+      type:location.type,
+      properties:location.properties,
+    // },
+    geometry,
   };
-  AtmModel.create(newATM)
+  console.log(newATM);
+ await AtmModel.create(newATM)
     .then((data) => {
       res.send("ATM added successfully");
     })
     .catch((error) => {
-      error.message="Failed to Add";
+      error.status = 403;
+        // error.message="Failed to Add";
         next(error)
     });
 });
+
+//create many reviews
+atmRouter.post("/createreviews", async(req, res, next) => {
+  const { data, userId } = req.body;
+  // const newATMs =data.map(atm=>{
+  //   return {
+  //     location:atm,
+  //     userId
+  //   }
+  // })
+ await AtmModel.insertMany(req.body)
+    .then((data) => {
+      res.send("ATMs added successfully");
+    })
+    .catch((error) => {
+        error.message="Failed to Add";
+        next(error)
+    });
+});
+
 
 //done
 atmRouter.delete("/:id", (req, res, next) => {
@@ -79,13 +107,13 @@ atmRouter.delete("/:id", (req, res, next) => {
 
 //done
 atmRouter.patch("/:id", (req, res, next) => {
-  const {geojson } = req.body;
+  const {location } = req.body;
   const {
     params: { id },
   } = req;
 
   const updatedAtm = {
-   geojson
+   location
   };
   AtmModel.updateOne({ _id: id }, { $set: updatedAtm }, (err, data) => {
     if (err) {

@@ -7,7 +7,7 @@ const userSchema = mongoose.Schema({
     email: { type: String, required: true,match: /.+\@.+\..+/,unique: true},
     password: { type: String, required: true },
     username: { type: String, required: true, minlength: 3, maxlength: 15 },
-})
+},{timestamps: { createdAt: true, updatedAt: true }})
 
 userSchema.pre('save', async function(next) {
     const userDocument = this;

@@ -7,10 +7,10 @@ const {reviewRouter} = require('./routers/reviewApi')
 const {userRouter} = require('./routers/userApi')
 const app = require('./database/server')
 const { atmRouter } = require('./routers/atmApi')
-
+const cors = require('cors');
 //body parsing
 app.use(express.json())
-
+app.use(cors("*"))
 ////logging 
 // create a write stream (in append mode)
 var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })

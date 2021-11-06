@@ -25,14 +25,25 @@ userRouter.post('/register', async (req, res, next) => {
             username,
             password,
         })
-        const createUser = await newUser.save();
-        //omit function for object --> create a new object of 1st parameter, removing 
-        //|| the property in the second parameter
-        ///override toJSON function
-        const instance = _.omit(createUser.toJSON(), "password")
-        res.status(201).send(instance)
-    } catch (error) {
-        error.status=403;
+        await User.findOne({email},async (err, data)=>{
+            if(!data){
+            const createUser = await newUser.save();
+            //omit function for object --> create a new object of 1st parameter, removing 
+            //|| the property in the second parameter
+            ///override toJSON function
+            const instance = _.omit(createUser.toJSON(), "password");
+            console.log(instance);
+            jwt.sign({ _id: instance.id }, process.env.PRIVATE_KEY, { expiresIn: "60m" }, (err, token) => {
+                console.log("Register successfully")
+                instance.token = token;
+                res.status(201).send(instance)
+            })
+        }else{
+            res.status(403).send({msg:"Existing Email"})
+        }
+        });
+        } catch (error) {
+            error.status=403;
         error.message="Invalid Inputs"
         next(error)
     }
@@ -53,7 +64,8 @@ userRouter.post('/login', async (req, res, next) => {
             //send token
             jwt.sign({ _id: user.id }, process.env.PRIVATE_KEY, { expiresIn: "60m" }, (err, token) => {
                 console.log("Login successfully")
-                res.send(token)
+                console.log(user);
+                res.send({token, username:user.username,id:user.id})
             })
         }
         else {

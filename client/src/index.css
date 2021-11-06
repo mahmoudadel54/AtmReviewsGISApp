@@ -1,0 +1,107 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+*{
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+/***main page style***/
+.main-page{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+/*****End main page style *******/
+/*******Login Form style************/
+.register-login-form {
+  width: 100%;
+  max-width: 330px;
+  padding: 35px;
+  height: 100%;
+  margin-top:5% !important;
+  background: darkgray;
+  border-radius: 10px;
+}
+.submit-btn{
+  width: 150px;
+}
+.submit-btn-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+/****************/
+/******NavBar*****/
+.username-in-nav{
+  padding: 5px;
+  background-color: #d3d1ce;
+  border-radius: 5px;
+}
+/****************/
+/******Map Style*******/
+#mapID{
+  width: 100%;
+  height: 90vh;
+}
+/****************/
+/****** Review List Style  *****/
+.reviews-list-container{
+  /* display: flex;
+  flex-direction: row;
+  justify-content: end;
+  position: absolute; */
+  /* right: 0; */
+  min-width: 350px;
+  padding-right: 15px;
+  /* max-height: 75vh !important; */
+  overflow: overlay;
+  height: 90vh;
+}
+.reviews-list-container .card-body{
+  border-radius:5px;
+  background-color:yellowgreen
+}
+.reviews-list-container .card-body.highlighted{
+  background: wheat;
+}
+.reviews-list-container .content{
+  background-color: blueviolet;
+  margin: 10px 5px;
+  width: 300px !important;
+  z-index: 1500;
+  height: 75vh;
+  
+}
+/***********/
+
+/********Leaflet style*****/
+.leaflet-control-feature-legend-title{
+  font-size: large !important;
+  margin-bottom:10px ;
+}
+.leaflet-control-feature-legend.leaflet-control div{
+  display: flex;
+  flex-direction: row;
+}
+.leaflet-control-feature-legend.leaflet-control div span{
+  /* height: 20px; */
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      margin-left: 9px;
+      font-weight: bolder;
+}
+/**************/

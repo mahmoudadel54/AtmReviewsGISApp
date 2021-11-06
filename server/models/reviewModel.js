@@ -4,7 +4,7 @@ const {Schema} = mongoose;
 
 
 const reviewSchema = Schema({
-  userId: { type: Schema.Types.ObjectId, ref: 'User ' },
+  ownerId: { type: Schema.Types.ObjectId, ref: 'User ' },
   atmId: { type: Schema.Types.ObjectId, ref: 'ATM ' },
   title: { type: String, required: true, minlength:5, maxlength:20, index:true },
   reviewContent: {type: String, required: true },

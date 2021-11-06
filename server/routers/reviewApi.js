@@ -39,16 +39,16 @@ reviewRouter.get("/:id", (req, res, next) => {
 
 //create a review
 reviewRouter.post("/", (req, res, next) => {
-  const { reviewContent, title, userId, atmId } = req.body;
+  const { reviewContent, title, ownerId, atmId } = req.body;
   const newReview = {
-    title: title,
-    reviewContent: reviewContent,
-    userId: userId,
-    atmId: atmId,
+    title,
+    reviewContent,
+    ownerId,
+    atmId,
   };
   Review.create(newReview)
     .then((data) => {
-      res.send("Review added successfully");
+      res.send({msg:"Review added successfully", data});
     })
     .catch((error) => {
         next(error)
@@ -79,24 +79,24 @@ reviewRouter.patch("/:id", (req, res, next) => {
   } = req;
 
   const updatedReview = {
-    title: title,
-    reviewContent: status,
+    title,
+    reviewContent,
   };
   Review.updateOne({ _id: id }, { $set: updatedReview }, (err, data) => {
     if (err) {
       return next(err);
     } else {
-      res.send("Edited Successfully");
+      res.send({msg:"Edited Successfully", data});
     }
   });
 });
 
 //get by atmId & userID
-reviewRouter.get("/:atmId/:userId", (req, res, next) => {
+reviewRouter.get("/:atmId/:ownerId", (req, res, next) => {
     const {
-      params: { atmId,userId },
+      params: { atmId,ownerId },
     } = req;
-    Review.find({ atmId, userId }, (err, data) => {
+    Review.find({ atmId, ownerId }, (err, data) => {
       if (err) {
         return next(err);
       }
@@ -123,9 +123,9 @@ reviewRouter.get("/atmid/:atmId", (req, res, next) => {
   //get by userId 
 reviewRouter.get("/userid/:userId", (req, res, next) => {
     const {
-      params: { userId },
+      params: { ownerId },
     } = req;
-    Review.find({ userId }, (err, data) => {
+    Review.find({ ownerId }, (err, data) => {
       if (err) {
         return next(err);
       }
