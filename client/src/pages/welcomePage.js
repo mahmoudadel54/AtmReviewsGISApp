@@ -2,9 +2,14 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 function WelcomePage() {
     return (
-        <div>
+        <div className="welcome-page-container">
+           <p>
+
             Welcome to Review App
-            <Link to="/index">Go Main Page</Link>
+           </p>
+           &nbsp;
+
+            <Link to="/index"> Go Main Page</Link>
            
         </div>
     )

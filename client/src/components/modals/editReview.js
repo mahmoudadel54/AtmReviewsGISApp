@@ -2,17 +2,19 @@ import React, { useState, useEffect } from 'react'
 import {Button, Modal} from 'react-bootstrap'
 import { connect } from 'react-redux';
 import axiosInstance from '../../utils/axiosInstance';
+import RatingStars from '../RatingComponents/ratingStarsComp';
 
 function EditReview(props) {    
     const handleClose = () => props.setShow(false);
     const [data, setData] = useState({
-        title: "",
+        // title: "",
         reviewContent: "",
+        rating:""
       });
       useEffect(() => {
           let review = props.reviewList.find(r=>r._id===props.editReviewID);
          setData({
-            title:review?review.title:"",
+            rating:review?review.rating:"",
             reviewContent:review?review.reviewContent:"",  
         })
         return () => {
@@ -26,7 +28,7 @@ function EditReview(props) {
       };
       const handleSubmit = async () => {
           const {  openLoader, failRequest, editReviewFunc } = props;
-        if (data.title && data.reviewContent) {
+        if (data.rating && data.reviewContent) {
           try {
             openLoader();
             let res = await axiosInstance.patch(`/review/${props.editReviewID}`, 
@@ -58,7 +60,7 @@ function EditReview(props) {
           <Modal.Title>Edit Review</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <div className="mb-3">
+        {/* <div className="mb-3">
           <label htmlFor="exampleFormControlInput1" className="form-label">
             Title Review
           </label>
@@ -71,7 +73,7 @@ function EditReview(props) {
             placeholder="Enter the review title "
             onChange={handleChange}
           />
-        </div>
+        </div> */}
         <div className="mb-3 bt-3">
           <label htmlFor="exampleFormControlTextarea1" className="form-label">
          Content Review
@@ -86,6 +88,10 @@ function EditReview(props) {
             onChange={handleChange}
           />
         </div>
+        <div className="mb-3 bt-3">
+         
+         <RatingStars data={data} setData={setData} />
+         </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

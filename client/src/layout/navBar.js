@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link, withRouter } from 'react-router-dom'
+import LOGO from "../assets/images/atm_app_logo.png";
 function NavBar(props) {
   const handleLogout =()=>{
     props.logout();
@@ -10,16 +11,16 @@ function NavBar(props) {
     <React.Fragment>
       <nav className="navbar navbar-light bg-light">
         <div className="container-fluid">
-          <Link to="/home" className="navbar-brand">Review Application</Link>
+          <Link to="/home" className="navbar-brand"> <img src={LOGO} alt="app logo" style={{width:"2.2rem"}} /> Review Application</Link>
           <div className="d-flex">
-            {!props.isAuth?<><Link to="/register" className="btn btn-secondary">
+            {!props.isAuth?<><Link to="/register" className="btn btn-secondary m-1">
               Register
             </Link>
-            <Link to="/login" className="btn btn-outline-success">
+            <Link to="/login" className="btn btn-outline-success m-1">
               Login
             </Link></>:<>
-            <strong className="username-in-nav">Hi {props.user.username} !!</strong>
-            <button to="/" className="btn btn-danger" onClick={handleLogout}>
+            <strong className="username-in-nav m-1">Hi {props.user.username} !!</strong>
+            <button to="/" className="btn btn-danger m-1" onClick={handleLogout}>
               Log out
             </button>
             </>

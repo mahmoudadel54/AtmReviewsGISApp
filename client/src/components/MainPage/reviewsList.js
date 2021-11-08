@@ -10,7 +10,6 @@ function ReviewsList(props) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [editReviewID, setEditReviewID] = useState("");
   const [deleteReviewID, setDeleteReviewID] = useState("");
-  const { reviewData, setReviewData, mapInstance } = props;
   const handleAddReview = () => {
     setShowAddModal(true);
     console.log("add review");
@@ -45,63 +44,87 @@ function ReviewsList(props) {
           }}
         >
           <div class="card-header">Atm Reviews</div>
-          <button
-            title="Add Review"
-            className="btn btn-primary"
+          <span
+            title="Zoom To"
+            className="btn"
             onClick={handleZoom}
           >
             <strong
               style={{
                 fontSize: "15px",
+                color:"white"
               }}
             >
               <i className="fas fa-search-location fa-2x"></i>
             </strong>
-          </button>
-          <button
+          </span>
+          <span
             title="Add Review"
-            className="btn btn-primary"
+            className="btn"
             onClick={handleAddReview}
           >
             <strong
               style={{
                 fontSize: "15px",
+                color:"white"
               }}
             >
              <i className="fas fa-plus-circle"></i>
             </strong>
-          </button>
-          <button
+          </span>
+          <span
             title="Hide"
-            className="btn btn-danger"
+            className="btn"
             onClick={handleHideReviewsList}
           >
             <strong
               style={{
                 fontSize: "15px",
-                color: "white",
+                color: "red",
               }}
             >
               <i className="far fa-times-circle"></i>
             </strong>
-          </button>
+          </span>
         </div>
 
         {props.reviewList.length ? (
           props.reviewList.map((r, index) => (
             <div>
-              <div class={index % 2 !== 1 ? "card-body m-2" : "card-body highlighted m-2"}>
-                <h5 class="card-title">{r.title}</h5>
+              <div class={"card-body"}>
+                {/* <h5 class="card-title">Title: {r.title}</h5> */}
                 <p class="card-text">{r.reviewContent}</p>
+                {r.rating&&<p class="card-text">{Array(r.rating).fill(1).map(r=><>
+                  <svg 
+                width="15" 
+                height="15" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="#393939" 
+                strokeWidth="1" 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                style={{
+                  fill: 'yellow'
+              }}
+            >
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+                </>)}
+                </p>}
+                <p class="card-text" style={{fontSize:"10px"}}>Created at ({r.createdAt.split("T")[0]})</p>
+
                 <button
                   onClick={() => handleEdit(r._id)}
-                  class="btn btn-primary p-1 m-1"
+                  class="btn btn-secondary p-1 m-1"
+                  title="Edit Review"
                 >
                   <i className="fas fa-edit"></i>
                 </button>
                 <button
                   onClick={() => handleDelete(r._id)}
                   class="btn btn-secondary p-1 m-1"
+                  title="Delete Review"
                 >
                   <i className="fas fa-trash"></i>
                 </button>

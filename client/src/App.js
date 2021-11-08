@@ -4,34 +4,21 @@ import NotFoundPage from './pages/404page';
 import Home from './pages/home';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-import Loader from "react-loader";
+// import ClipLoader from "react-spinners/ClipLoader";7
+import Spinner from 'react-bootstrap/Spinner'
 import { connect } from 'react-redux';
 import PrivateRoute from './helpers/PrivateRoute';
 import WelcomePage from './pages/welcomePage';
 function App(props) {
   return (
     <div className="App">
-       <Loader
-        loaded={!props.loading}
-        lines={13}
-        length={20}
-        width={10}
-        radius={30}
-        corners={1}
-        rotate={0}
-        direction={1}
+      {props.loading?<div className="loader-wrapper"><Spinner animation="border" size="xlg"  /></div> :null}
+       {/* <ClipLoader
+        loading={props.loading}
+        size={35}
         color="#000"
-        speed={1}
-        trail={60}
-        shadow={false}
-        hwaccel={false}
-        className="spinner"
-        zIndex={2e9}
-        top="50%"
-        left="50%"
-        scale={1.0}
-        loadedClassName="loadedContent"
-      />
+
+      /> */}
       <NavBar />
       <main>
         <Switch>

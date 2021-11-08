@@ -5,6 +5,7 @@ const _ = require('lodash')
 const jwt = require('jsonwebtoken')
 const User = require('../models/userModel')
 const matchPass = require('../helpers/matchPassword')
+const authorize = require('../helpers/authorize')
 require('dotenv').config()
 
 
@@ -65,7 +66,7 @@ userRouter.post('/login', async (req, res, next) => {
             jwt.sign({ _id: user.id }, process.env.PRIVATE_KEY, { expiresIn: "60m" }, (err, token) => {
                 console.log("Login successfully")
                 console.log(user);
-                res.send({token, username:user.username,id:user.id})
+                res.send({token, username:user.username,id:user.id, role:user.role})
             })
         }
         else {
@@ -171,7 +172,19 @@ userRouter.patch('/', (req, res, next) => {
     }
 })
 
-
+userRouter.get('/auth',authorize,(req,res)=>{
+    const id = req.user;
+    console.log(id);
+    jwt.sign({ _id: id }, process.env.PRIVATE_KEY, { expiresIn: "60m" }, (err, token) => {
+    User.findOne({_id:id},(err2, data) => {
+        if (err2) {
+            return next(err2);
+        } else {
+            res.send({token, username:data.username,id:data.id, role:data.role})
+        }
+    })
+    })
+});
 
 module.exports = {
     userRouter

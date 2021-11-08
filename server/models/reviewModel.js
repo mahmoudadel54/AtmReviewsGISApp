@@ -6,8 +6,9 @@ const {Schema} = mongoose;
 const reviewSchema = Schema({
   ownerId: { type: Schema.Types.ObjectId, ref: 'User ' },
   atmId: { type: Schema.Types.ObjectId, ref: 'ATM ' },
-  title: { type: String, required: true, minlength:5, maxlength:20, index:true },
+  title: { type: String, required: true, minlength:5, maxlength:20, default:"title review" },
   reviewContent: {type: String, required: true },
+  rating:{ type:Number }
 },
 {timestamps: { createdAt: true, updatedAt: true }
 })

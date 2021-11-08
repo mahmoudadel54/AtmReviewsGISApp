@@ -7,7 +7,7 @@ module.exports = function(req, res, next){
     }
     try {
         const verify = jwt.verify(token, process.env.PRIVATE_KEY);
-        req.user = verify.user;
+        req.user = verify._id;
         next();
     } catch (error) {
         res.status(401).json({ msg: "Token is not valid" });

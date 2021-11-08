@@ -56,4 +56,12 @@ export const createUSer = (url) => {
         });
     };
   };
-
+export const  checkAuth =async(url, action)=>{
+  try {
+    let res = await axiosInstance.get(url);
+    return res
+  } catch (error) {
+    console.log(error);
+    return "not authorized"
+  }
+}

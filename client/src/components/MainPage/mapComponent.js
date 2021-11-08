@@ -121,8 +121,18 @@ L.control.scale().addTo(map);
               let atmId = e.target.feature._id;
               let latlngAtm = e.latlng;
               try {
-                let res = await axiosInstance.get(
+                let res =
+                props.user.role==="user"? 
+                await axiosInstance.get(
                   `/review/${atmId}/${ownerId}`,
+                  {
+                    headers: {
+                      authorization: props.token,
+                    },
+                  }
+                )
+                :await axiosInstance.get(
+                  `/review/atmid/${atmId}`,
                   {
                     headers: {
                       authorization: props.token,

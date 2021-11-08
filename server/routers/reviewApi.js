@@ -39,13 +39,15 @@ reviewRouter.get("/:id", (req, res, next) => {
 
 //create a review
 reviewRouter.post("/", (req, res, next) => {
-  const { reviewContent, title, ownerId, atmId } = req.body;
+  const { reviewContent, title, ownerId, atmId,rating } = req.body;
   const newReview = {
     title,
     reviewContent,
     ownerId,
     atmId,
+    rating
   };
+  console.log(newReview);
   Review.create(newReview)
     .then((data) => {
       res.send({msg:"Review added successfully", data});

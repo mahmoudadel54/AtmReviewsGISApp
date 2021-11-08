@@ -1,3 +1,6 @@
+import axiosInstance from "../../utils/axiosInstance";
+import store from "../store";
+
 const initialState = {
   loading: false,
   reviewList: [],
@@ -99,9 +102,31 @@ const userReducer = (state = { ...initialState }, action) => {
         loading: false,
         reviewList: [...state.reviewList, action.payload],
       };
-    default:
+    case "CHECK_AUTH":
+      checkAuth("/user/auth").then(res=>{
+        if(res!=="not auth")
+        store.dispatch({type:"LOGIN_SUCCESS", payload:res.data})
+        else store.dispatch({type:"LOGOUT"})
+      })
+      return {...state}
+      default:
       return state;
   }
 };
+
+const  checkAuth =async(url, action)=>{
+  try {
+    let res = await axiosInstance.get(url,{
+      headers:{
+        authorization:localStorage.getItem("tokenReviewApp")?localStorage.getItem("tokenReviewApp"):""
+      }
+    });
+    return res
+  } catch (error) {
+    console.log(error);
+    return "not auth"
+  }
+}
+
 
 export default userReducer;

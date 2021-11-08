@@ -2,13 +2,15 @@ import React, { useState } from 'react'
 import {Button, Modal} from 'react-bootstrap'
 import { connect } from 'react-redux';
 import axiosInstance from '../../utils/axiosInstance';
+import RatingStars from '../RatingComponents/ratingStarsComp';
 
 function AddReview(props) {
     
     const handleClose = () => props.setShow(false);
     const [data, setData] = useState({
-        title: "",
+        // title: "",
         reviewContent: "",
+        rating:""
       });
       const handleChange = (e) => {
         let name = e.target.name;
@@ -18,7 +20,7 @@ function AddReview(props) {
       const handleSubmit = async () => {
           const {  openLoader,failRequest , addReviewFunc } =
           props;
-        if (data.title && data.reviewContent) {
+        if (data.reviewContent&&data.rating) {
           console.log("submit", data);
           try {
             openLoader();
@@ -48,7 +50,7 @@ function AddReview(props) {
           <Modal.Title>Add New Review</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <div className="mb-3">
+        {/* <div className="mb-3">
           <label htmlFor="exampleFormControlInput1" className="form-label">
             Title Review
           </label>
@@ -60,7 +62,7 @@ function AddReview(props) {
             placeholder="Enter the review title "
             onChange={handleChange}
           />
-        </div>
+        </div> */}
         <div className="mb-3 bt-3">
           <label htmlFor="exampleFormControlTextarea1" className="form-label">
          Content Review
@@ -73,6 +75,10 @@ function AddReview(props) {
             placeholder="Enter your the review content"
             onChange={handleChange}
           />
+        </div>
+        <div className="mb-3 bt-3">
+         
+        <RatingStars data={data} setData={setData} />
         </div>
         </Modal.Body>
         <Modal.Footer>
