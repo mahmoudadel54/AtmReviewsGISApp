@@ -96,7 +96,9 @@ function ReviewsList(props) {
               <div class={"card-body"}>
                 {/* <h5 class="card-title">Title: {r.title}</h5> */}
                 <p class="card-text">{r.reviewContent}</p>
-                {r.rating&&<p class="card-text">{Array(r.rating).fill(1).map(r=><>
+                {r.rating&&<p class="card-text">{Array(5).fill(5).map((rate,j)=>
+                {
+                  return <>
                   <svg 
                 width="15" 
                 height="15" 
@@ -107,17 +109,17 @@ function ReviewsList(props) {
                 strokeLinecap="round" 
                 strokeLinejoin="round" 
                 style={{
-                  fill: 'yellow'
+                  fill:(parseInt(r.rating)<=j)?'white':"yellow"
               }}
             >
                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
             </svg>
-                </>)}
+                </>})}
                 </p>}
                 <p class="card-text" style={{fontSize:"10px"}}>Created at ({r.createdAt.split("T")[0]})</p>
-                <p class="card-text" style={{fontSize:"10px"}}>Created by ({r.ownerId.username})</p>
+                <p class="card-text mb-1" style={{fontSize:"10px"}}>Created by ({r.ownerId.username})</p>
 
-                <button
+              {r.ownerId._id===props.userId?(<><button
                   onClick={() => handleEdit(r._id)}
                   class="btn btn-secondary p-1 m-1"
                   title="Edit Review"
@@ -130,7 +132,7 @@ function ReviewsList(props) {
                   title="Delete Review"
                 >
                   <i className="fas fa-trash"></i>
-                </button>
+                </button></>):null}
               </div>
             </div>
           ))

@@ -86,6 +86,9 @@ code {
   height: 75vh;
   
 }
+p.card-text{
+margin: 0;
+}
 /***********/
 
 /********Leaflet style*****/
@@ -178,3 +181,4 @@ code {
   }
 }
 /*******/
+
