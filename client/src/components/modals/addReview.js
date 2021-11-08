@@ -21,7 +21,6 @@ function AddReview(props) {
           const {  openLoader,failRequest , addReviewFunc } =
           props;
         if (data.reviewContent&&data.rating) {
-          console.log("submit", data);
           try {
             openLoader();
             let res = await axiosInstance.post("/review", {...data,atmId:props.atmData.atmId, ownerId:props.user.id },{
@@ -31,7 +30,7 @@ function AddReview(props) {
             });
             if (res.status === 200) {
               console.log(res.data);
-              addReviewFunc(res.data.data);
+              addReviewFunc({...res.data.data, ownerId:{_id:props.user.id, username:props.user.username}});
               handleClose();
             } else {
               failRequest("Invalid Inputs");

@@ -1,11 +1,8 @@
 const mongoose = require('mongoose')
 
-const {Schema} = mongoose;
-
-
-const reviewSchema = Schema({
-  ownerId: { type: Schema.Types.ObjectId, ref: 'User ' },
-  atmId: { type: Schema.Types.ObjectId, ref: 'ATM ' },
+const reviewSchema = mongoose.Schema({
+  ownerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  atmId: { type: mongoose.Schema.Types.ObjectId, ref: 'Atm' },
   title: { type: String, required: true, minlength:5, maxlength:20, default:"title review" },
   reviewContent: {type: String, required: true },
   rating:{ type:Number }

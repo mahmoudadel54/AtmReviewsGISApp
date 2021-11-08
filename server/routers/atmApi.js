@@ -140,6 +140,4 @@ atmRouter.get("/userid/:userId", (req, res, next) => {
       }
     });
   });
-module.exports = {
-  atmRouter,
-};
+module.exports = atmRouter

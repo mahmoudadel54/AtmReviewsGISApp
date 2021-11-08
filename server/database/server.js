@@ -15,7 +15,7 @@ mongoose.connect(process.env.CONNECTION_DB,{useNewUrlParser:true ,useUnifiedTopo
     })
 })
 
-module.exports = app;
+module.exports = app
 
 
 

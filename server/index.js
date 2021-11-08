@@ -2,11 +2,9 @@ const express = require('express')              ///it is better to order all req
 const fs = require('fs')                        //|| built in modules --> then (npm) modules --> (../) modules
 const morgan = require('morgan')
 const path = require('path')
+const app= require('./database/server')
 const authorize = require('./helpers/authorize')
-const {reviewRouter} = require('./routers/reviewApi')
-const {userRouter} = require('./routers/userApi')
-const app = require('./database/server')
-const { atmRouter } = require('./routers/atmApi')
+
 const cors = require('cors');
 //body parsing
 app.use(express.json())
@@ -19,9 +17,9 @@ var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {
 app.use(morgan('combined', { stream: accessLogStream }))
 
 ///we can array of paths 
-app.use(['/reviews','/review'],authorize,reviewRouter)
-app.use(['/users','/user'],userRouter)
-app.use(['/atms','/atm'],authorize,atmRouter)
+app.use(['/users','/user'],require('./routers/userApi'))
+app.use(['/atms','/atm'],authorize,require('./routers/atmApi'))
+app.use(['/reviews','/review'],authorize,require('./routers/reviewApi'))
 
 
 //for page not found

@@ -117,21 +117,11 @@ L.control.scale().addTo(map);
           
           marker.on("click", async (e) => {
             if (e.target.feature) {
-              let ownerId = props.user._id ? props.user._id : props.user.id;
+              // let ownerId = props.user._id ? props.user._id : props.user.id;
               let atmId = e.target.feature._id;
               let latlngAtm = e.latlng;
               try {
-                let res =
-                props.user.role==="user"? 
-                await axiosInstance.get(
-                  `/review/${atmId}/${ownerId}`,
-                  {
-                    headers: {
-                      authorization: props.token,
-                    },
-                  }
-                )
-                :await axiosInstance.get(
+                let res = await axiosInstance.get(
                   `/review/atmid/${atmId}`,
                   {
                     headers: {
@@ -139,7 +129,6 @@ L.control.scale().addTo(map);
                     },
                   }
                 );
-                console.log(res.data);
                 props.setShowReviewList({ bool: true, atmId, latlng:latlngAtm });
                 props.setReviewData(res.data);
               } catch (error) {
@@ -159,7 +148,7 @@ L.control.scale().addTo(map);
       map.fitBounds(atmLayer.getBounds());
     });
     map.addLayer(atmLayer);
-    console.log(map);
+    console.log({map});
   };
   return <div id="mapID"></div>;
 }

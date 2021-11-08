@@ -1,10 +1,8 @@
 const express = require('express')
-const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const _ = require('lodash')
 const jwt = require('jsonwebtoken')
 const User = require('../models/userModel')
-const matchPass = require('../helpers/matchPassword')
 const authorize = require('../helpers/authorize')
 require('dotenv').config()
 
@@ -175,7 +173,7 @@ userRouter.patch('/', (req, res, next) => {
 userRouter.get('/auth',authorize,(req,res)=>{
     const id = req.user;
     console.log(id);
-    jwt.sign({ _id: id }, process.env.PRIVATE_KEY, { expiresIn: "60m" }, (err, token) => {
+    jwt.sign({ _id: id }, process.env.PRIVATE_KEY, { expiresIn: "600m" }, (err, token) => {
     User.findOne({_id:id},(err2, data) => {
         if (err2) {
             return next(err2);
@@ -186,9 +184,7 @@ userRouter.get('/auth',authorize,(req,res)=>{
     })
 });
 
-module.exports = {
-    userRouter
-}
+module.exports = userRouter
 
 
 

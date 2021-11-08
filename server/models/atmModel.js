@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
-const geoJSONSchema = new Schema({
+const mongoose = require('mongoose')
+
+const geoJSONSchema =  mongoose.Schema({
     type: {
       type: String, // Don't do `{ location: { type: String } }`
       enum: ["Point"],
@@ -12,8 +12,8 @@ const geoJSONSchema = new Schema({
     },
 });
 
-const atmSchema = new Schema({
-  userId: { type: Schema.Types.ObjectId, ref: "User " },
+const atmSchema =  mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   type: { type: String, default: "Feature" },
   // location:{
     properties: {

@@ -58,6 +58,8 @@ function ReviewsList(props) {
               <i className="fas fa-search-location fa-2x"></i>
             </strong>
           </span>
+          {props.reviewList.length&&
+          props.reviewList.find(item=>item.ownerId._id===props.userId)?null:
           <span
             title="Add Review"
             className="btn"
@@ -71,7 +73,7 @@ function ReviewsList(props) {
             >
              <i className="fas fa-plus-circle"></i>
             </strong>
-          </span>
+          </span>}
           <span
             title="Hide"
             className="btn"
@@ -80,7 +82,7 @@ function ReviewsList(props) {
             <strong
               style={{
                 fontSize: "15px",
-                color: "red",
+                color: "#ff8a8a",
               }}
             >
               <i className="far fa-times-circle"></i>
@@ -113,6 +115,7 @@ function ReviewsList(props) {
                 </>)}
                 </p>}
                 <p class="card-text" style={{fontSize:"10px"}}>Created at ({r.createdAt.split("T")[0]})</p>
+                <p class="card-text" style={{fontSize:"10px"}}>Created by ({r.ownerId.username})</p>
 
                 <button
                   onClick={() => handleEdit(r._id)}
@@ -164,6 +167,7 @@ const mapStateToProps = (state) => {
   let { user } = state;
   return {
     reviewList: user.reviewList,
+    userId:user.auth.user.id
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ReviewsList);

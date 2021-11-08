@@ -98,14 +98,16 @@ reviewRouter.get("/:atmId/:ownerId", (req, res, next) => {
     const {
       params: { atmId,ownerId },
     } = req;
-    Review.find({ atmId, ownerId }, (err, data) => {
-      if (err) {
-        return next(err);
-      }
-      {
+    if(!["atmid","ownerId"].includes(atmId))
+    Review.find({ atmId, ownerId }).populate("ownerId", 'username').exec((err,data) => {
+      if(err){
+        console.log(err);
+        err.status = 403;
+      return next(err);
+      }else
         res.send(data);
-      }
-    });
+    })
+    else next()
   });
 
 //get by atmId 
@@ -113,20 +115,23 @@ reviewRouter.get("/atmid/:atmId", (req, res, next) => {
     const {
       params: { atmId },
     } = req;
-    Review.find({ atmId }, (err, data) => {
+    if(req.originalUrl.split("/").includes("atmid"))
+    Review.find({ atmId }).populate("ownerId", 'username').exec((err, data) => {
       if (err) {
         return next(err);
-      }
+      }else
       {
         res.send(data);
       }
     });
+    else next()
   });
   //get by userId 
-reviewRouter.get("/userid/:userId", (req, res, next) => {
+reviewRouter.get("/ownerId/:ownerId", (req, res, next) => {
     const {
       params: { ownerId },
     } = req;
+    if(req.originalUrl.split("/").includes("ownerId"))
     Review.find({ ownerId }, (err, data) => {
       if (err) {
         return next(err);
@@ -135,8 +140,7 @@ reviewRouter.get("/userid/:userId", (req, res, next) => {
         res.send(data);
       }
     });
+    else next()
   });
 
-module.exports = {
-  reviewRouter,
-};
+module.exports = reviewRouter;
