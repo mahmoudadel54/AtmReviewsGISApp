@@ -108,6 +108,18 @@ margin: 0;
       margin-left: 9px;
       font-weight: bolder;
 }
+.leaflet-top.location{
+  position: absolute;
+    top: 13em;
+}
+.leaflet-control.location{
+  background: white;
+}
+.leaflet-control.location img.location-control{
+  width: 30px;
+    height: 30px;
+    line-height: 30px;
+}
 /**************/
 
 /*******Star rating Component****************/
